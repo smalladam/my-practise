@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>画笔</title>
+	<style>
+     body{
+     	background-color: #ccc;
+     	margin:0;
+     	padding:0;
+     }
+     .container{
+        width: 800px;
+        height: 500px;
+        margin:0 auto;
+     }
+     #myCanvas{
+     	background-color: #fff;
+     }
+     .color-btn{
+     	display:inline-block;
+     	width: 40px;
+     	height: 40px;
+     }
+     .red-btn{
+     	background-color: red;
+     }
+     .orange-btn{
+     	background-color: orange;
+     }
+     .yellow-btn{
+     	background-color: yellow;
+     }
+     .green-btn{
+     	background-color: green;
+     }
+     .blue-btn{
+     	background-color: blue;
+     }
+     .purple-btn{
+     	background-color: purple;
+     }
+     .black-btn{
+     	background-color: black;
+     }
+     .pen-size{
+     	display: inline-block;
+     	border-radius: 50%;
+     	background-color: #000;
+     }
+     .pen-5{
+     	width: 5px;
+     	height: 5px;
+     }
+     .pen-10{
+     	width: 10px;
+     	height: 10px;
+     }
+     .pen-15{
+     	width: 15px;
+     	height: 15px;
+     }
+     .pen-20{
+     	width: 20px;
+     	height: 20px;
+     }
+     .pen-25{
+     	width: 25px;
+     	height: 25px;
+     }
+     .pen-30{
+     	width: 30px;
+     	height: 30px;
+     }
+     .clear-btn{
+     	width: 60px;
+     	height: 40px;
+     	border:none;
+     	background-color: #e8e8e8; 
+     	color:#000;
+     	font-size: 18px;
+     	font-family: "黑体";
+     	border-radius: 5px;
+     }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<canvas id="myCanvas" width="800" height="500"></canvas>
+
+		<div class="btn-section">
+			<span class="color-btn red-btn" data-color="red"></span>
+			<span class="color-btn orange-btn" data-color="orange"></span>
+			<span class="color-btn yellow-btn" data-color="yellow"></span>
+			<span class="color-btn green-btn" data-color="green"></span>
+			<span class="color-btn blue-btn" data-color="blue"></span>
+			<span class="color-btn purple-btn" data-color="purple"></span>
+			<span class="color-btn black-btn" data-color="black"></span>
+
+            <span class="pen-size pen-5" data-size="5"></span>
+			<span class="pen-size pen-10" data-size="10"></span>
+			<span class="pen-size pen-15" data-size="15"></span>
+			<span class="pen-size pen-20" data-size="20"></span>
+			<span class="pen-size pen-25" data-size="25"></span>
+			<span class="pen-size pen-30" data-size="30"></span>
+
+			<button class="clear-btn" id="clear">清除</button>
+			<span id="test"></span>
+		</div>
+	</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script>
+	window.onload = function(){
+
+		 function G(sId){
+		 	return document.getElementById(sId);
+		 }
+
+		 var cvs = G('myCanvas');
+
+		 // 切换至绘图的内容上
+		 var ctx = cvs.getContext('2d');
+
+		 var penX = 0;
+		 var penY = 0;
+
+		 var lineWidth = 10;
+		 var txtColor = 'red';
+
+		 var switchBtn = false;
+         
+         $('.color-btn').click(function(){
+         	txtColor = $(this).attr('data-color');
+         });
+         $('.pen-size').click(function(){
+         	lineWidth = parseInt($(this).attr('data-size'));
+         })
+		 // 鼠标按下，获取鼠标按下的坐标 ,打开绘制开关
+		 cvs.addEventListener('mousedown',function(e){
+		 	  switchBtn = true;
+		 	  penX = e.offsetX;
+		      penY = e.offsetY;
+		      console.log(penX);
+		 })
+
+		 // 鼠标移动
+		 cvs.addEventListener('mousemove',function(e){
+               // G('test').innerHTML = 'x:' + (e.clientX - cvs.offsetLeft)+ ",y:" + (e.clientY - cvs.offsetTop);
+		 	G('test').innerHTML = 'x:' +e.offsetX + ",y:"+ e.offsetY ;
+
+		 	if(switchBtn == true){
+		 		ctx.beginPath();
+		 		ctx.moveTo(penX,penY);
+		 		ctx.lineTo(e.offsetX,e.offsetY);
+		 		ctx.lineWidth = lineWidth;
+		 		ctx.strokeStyle = txtColor;
+		 		ctx.lineCap = 'round';
+		 		ctx.stroke();
+		 		ctx.closePath();
+
+		 		penX = e.offsetX;
+		 		penY = e.offsetY;
+		 	}
+		 })
+		 // 鼠标抬起
+		 cvs.addEventListener('mouseup',function(e){
+
+		 	switchBtn = false;
+		 });
+
+          // 清除画布
+		 G('clear').addEventListener('click', function(e){
+         ctx.clearRect(0,0, 800, 500);
+      })
+	  }
+</script>
+	
+</body>
+</html>
