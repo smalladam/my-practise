@@ -5,12 +5,12 @@
 	<title>画笔</title>
 	<style>
      body{
-     	background-color: #ccc;
+     	background-color: #E3E3E3;
      	margin:0;
      	padding:0;
      }
      .container{
-        width: 800px;
+        width: 860px;
         height: 500px;
         margin:0 auto;
      }
@@ -21,6 +21,7 @@
      	display:inline-block;
      	width: 40px;
      	height: 40px;
+			border-radius: 5px;
      }
      .red-btn{
      	background-color: red;
@@ -41,7 +42,7 @@
      	background-color: purple;
      }
      .black-btn{
-     	background-color: black;
+     	background-color: #000;
      }
      .pen-size{
      	display: inline-block;
@@ -76,7 +77,7 @@
      	width: 60px;
      	height: 40px;
      	border:none;
-     	background-color: #e8e8e8; 
+     	background-color: #e8e8e8;
      	color:#000;
      	font-size: 18px;
      	font-family: "黑体";
@@ -128,7 +129,7 @@
 		 var txtColor = 'red';
 
 		 var switchBtn = false;
-         
+
          $('.color-btn').click(function(){
          	txtColor = $(this).attr('data-color');
          });
@@ -170,10 +171,10 @@
 
           // 清除画布
 		 G('clear').addEventListener('click', function(e){
-         ctx.clearRect(0,0, 800, 500);
+         ctx.clearRect(0,0, 860, 500);
       })
 	  }
 </script>
-	
+
 </body>
 </html>
